@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "app-name": "codeBlocks",
+    "architecture": false,
+    "styles-language": "sass"
+  }
+}
