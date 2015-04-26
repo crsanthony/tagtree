@@ -1,0 +1,48 @@
+@mixin animation ($animations...) {
+  animation: $animations;
+}
+
+@mixin animation-name ($names...) {
+  animation-name: $names;
+}
+
+
+@mixin animation-duration ($times...) {
+  animation-duration: $times;
+}
+
+
+@mixin animation-timing-function ($motions...) {
+  animation-timing-function: $motions;
+}
+
+
+@mixin animation-iteration-count ($values...) {
+  animation-iteration-count: $values;
+}
+
+
+@mixin animation-direction ($directions...) {
+  animation-direction: $directions;
+}
+
+
+@mixin animation-play-state ($states...) {
+  animation-play-state: $states;
+}
+
+
+@mixin animation-delay ($times...) {
+  animation-delay: $times;
+}
+
+
+@mixin animation-fill-mode ($modes...) {
+  animation-fill-mode: $modes;
+}
+
+@mixin keyframes($animationName) {
+  @keyframes #{$animationName} {
+    @content;
+  }
+}

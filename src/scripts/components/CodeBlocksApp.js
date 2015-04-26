@@ -1,25 +1,21 @@
 'use strict';
 
 var React = require('react/addons');
-var GameView = require('components/GameView')
-var Block = require('components/Block')
-
+var GameView = require('components/GameView');
+var Preview = require('components/Preview');
 
 
 // CSS
 require('normalize.css');
-require('../../styles/main.css');
+require('styles/Main.sass');
 require('styles/Block.sass');
 
-//mixins
-var Solutions = require('mixins/solutions')
-
 var CodeBlocksApp = React.createClass({
-	mixins: [Solutions]
-  , render: function() {
+  render: function() {
     return (
-      <div className='main'>
-      	<Block content="I'm some content"/>
+      <div className="Main">
+        <GameView />
+        <Preview />
       </div>
     );
   }

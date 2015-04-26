@@ -1,13 +1,28 @@
-.block 
-  border: 2px solid black
-  width: auto
-  text-overflow: elipsis
-  width: 100px;
+.block
+  border: 2px solid black;
+  position: absolute;
+  margin-top: 10px;
+  width: auto;
+  width: 50px !important;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding: 5px;
-  cursor: pointer
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  left: 1000px;
+  transition: left 1s ease-out, top 1s ease-in-out;
 
-  &:hover 
+  &:hover
   	background-color: rgba(255, 0, 0, .3)
+
+  &.selected
+     color: blue;
+
+@-webkit-keyframes blockIn
+  0%
+    left: 1000px
+  100%
+    left: 0px
+
