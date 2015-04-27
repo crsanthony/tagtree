@@ -9,14 +9,38 @@ require('styles/GameView.sass');
 var GameView = React.createClass({
 
   getInitialState: function() {
+    Solutions.getSolutions();
     return {
-      selected: []
+      selected: [],
+      currentString: ""
     }
+  }
+
+  , getBlocks: function() {
+
+  }
+
+  , checkForSolution: function() {
+
+        Solutions.solutions.forEach(function(value, index){
+        console.log(value, this.state.currentString);
+        if(this.state.currentString===value){
+            setTimeout(function(){
+                this.setState({currentString: ""})
+                alert("great job!");
+            }.bind(this), 1000);
+        } else {
+            console.log("nope!");
+        }
+     }.bind(this))
+
   }
 
   , handleItemSelect: function(content) {
      this.state.selected.push(content);
-     this.setState({ selected: this.state.selected });
+     this.state.currentString+=content;
+     this.setState({ selected: this.state.selected, currentString: this.state.currentString});
+     this.checkForSolution();
   }
 
   , render: function () {
@@ -24,7 +48,7 @@ var GameView = React.createClass({
         <div className="GameView">
           <Block content="</p>" order="0" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
           <Block content="<p>" order="1" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected}/>
-          <Block content="I am text" order="2" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
+          <Block content="I am some text" order="2" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
           <Block content="</h1>" order="3" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
           <Block content="my name is chris" order="4" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
           <Block content="<h1>" order="5" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
