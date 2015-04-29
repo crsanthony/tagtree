@@ -20,6 +20,17 @@ var Block = React.createClass({
     }.bind(this), 200)
   }
 
+  , _isSolved: function() {
+     var solved = false
+     this.props.solved.forEach(function(value, index){
+        if(value.indexOf(this.props.content)!=-1){
+            solved = true;
+        }
+     }.bind(this))
+
+     return solved;
+  }
+
   , _handleSelect: function() {
      this.setState({ selected : true, order: this.props.selectedItems? this.props.selectedItems.length : 0 });
      this.props.handleItemSelect(this.props.content)
@@ -31,9 +42,19 @@ var Block = React.createClass({
       top: this.state.selected ? (this.props.row * 10) + 'px' : ((this.props.row * 10) + 500) + 'px'
     };
 
+    var solved = this._isSolved();
+
+    var cx = React.addons.classSet;
+
+    var blockStyle = cx({
+        'block': true,
+        'block--dissolved': solved
+    })
+    var points = "+10";
     return (
-        <div className="block" style={divStyle} onClick={this._handleSelect}>
-          <span>{this.props.content}</span>
+        <div className={blockStyle} style={divStyle} onClick={this._handleSelect}>
+         <span className="points">{points}</span>
+          <span className="block__content">{this.props.content}</span>
         </div>
       );
   }

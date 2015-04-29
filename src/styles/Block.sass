@@ -17,7 +17,23 @@
   	background-color: rgba(255, 0, 0, .3)
 
   &.selected
-     color: blue;
+    color: blue;
+
+  &.block--dissolved
+    border: none;
+    height: 20px;
+
+    .block__content
+      display: none;
+    .points
+      display: block;
+
+
+
+.points
+  position: absolute;
+  font-size: 10px;
+  display: none;
 
 @-webkit-keyframes blockIn
   0%

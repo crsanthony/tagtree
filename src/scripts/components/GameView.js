@@ -9,25 +9,40 @@ require('styles/GameView.sass');
 var GameView = React.createClass({
 
   getInitialState: function() {
-    Solutions.getSolutions();
     return {
       selected: [],
-      currentString: "Hi"
+      currentString: "",
+      solved: []
     }
   }
 
-  , getBlocks: function() {
+  , getBlock: function(value, index) {
+      return ( <Block
+                content={value}
+                order={index} row="0"
+                handleItemSelect={this.handleItemSelect}
+                selectedItems={this.state.selected}
+                solved={this.state.solved} /> );
+  }
 
+  , getBlocks: function() {
+      var blocks = [];
+      Solutions.pieces.forEach(function(value, index){
+        blocks.push(this.getBlock(value, index));
+      }.bind(this));
+      return blocks;
   }
 
   , checkForSolution: function() {
-
         Solutions.solutions.forEach(function(value, index){
         console.log(value, this.state.currentString);
         if(this.state.currentString===value){
             setTimeout(function(){
-                this.setState({currentString: ""})
-                alert("great job!");
+                this.state.solved.push(this.state.currentString);
+                this.setState({
+                    currentString: "",
+                    solved: this.state.solved
+                });
             }.bind(this), 1000);
         } else {
             console.log("nope!");
@@ -46,12 +61,7 @@ var GameView = React.createClass({
   , render: function () {
     return (
         <div className="GameView">
-          <Block content="</p>" order="0" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
-          <Block content="<p>" order="1" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected}/>
-          <Block content="I am some text" order="2" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
-          <Block content="</h1>" order="3" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
-          <Block content="my name is chris" order="4" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
-          <Block content="<h1>" order="5" row="0" handleItemSelect={this.handleItemSelect} selectedItems={this.state.selected} />
+          { this.getBlocks() }
         </div>
       );
   }
