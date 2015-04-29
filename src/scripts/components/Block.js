@@ -27,9 +27,8 @@ var Block = React.createClass({
 
   , render: function () {
     var divStyle = {
-      marginTop: '20px',
       left: this.state.onboard ? (this.state.order * 70) + 'px' : (1000 + (this.state.order * 70)) + 'px',
-      top: this.state.selected ? (this.props.row * 40) + 'px' : ((this.props.row * 40) + 500) + 'px'
+      top: this.state.selected ? (this.props.row * 10) + 'px' : ((this.props.row * 10) + 500) + 'px'
     };
 
     return (

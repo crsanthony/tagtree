@@ -6,7 +6,7 @@ require('styles/Preview.sass');
 
 var GameView = React.createClass({
   render: function () {
-    var content = <p>I am text</p>
+    var content = "";
     return (
         <div className="Preview">
           {content}

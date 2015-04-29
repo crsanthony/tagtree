@@ -12,7 +12,7 @@ var GameView = React.createClass({
     Solutions.getSolutions();
     return {
       selected: [],
-      currentString: ""
+      currentString: "Hi"
     }
   }
 
