@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var PuzzlePiece = require('components/PuzzlePiece');
 
 require('styles/Preview.sass');
 

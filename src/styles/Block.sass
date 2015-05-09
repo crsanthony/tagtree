@@ -22,22 +22,25 @@
   &.block--dissolved
     border: none;
     height: 20px;
+    top: -20px;
 
     .block__content
       display: none;
     .points
       display: block;
+      line-height: 10px;
+      top: 0px;
+      opacity: 0;
 
-
+    .points--invalid
+      color: red;
 
 .points
   position: absolute;
   font-size: 10px;
-  display: none;
-
-@-webkit-keyframes blockIn
-  0%
-    left: 1000px
-  100%
-    left: 0px
+  line-height: 0px;
+  overflow: hidden;
+  opacity: 1;
+  top: 10px;
+  transition: opacity 1s ease, top 1s ease;
 
