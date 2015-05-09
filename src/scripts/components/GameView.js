@@ -23,6 +23,7 @@ var GameView = React.createClass({
   , getBlock: function(value, index) {
       return ( <Block
                 piece={value}
+                key={value.id + value.content}
                 id={value.id}
                 order={index} row="0"
                 ref={value.id}
@@ -57,9 +58,14 @@ var GameView = React.createClass({
   , removePiece: function(content) {
       this.state.unsolvedPieces.forEach(function(value, index){
         if(value.id=== content.id ){
-
+            this.state.unsolvedPieces.splice(index, 1);
+            console.log(this.state.selected);
+            console.log(content, this.state.selected.indexOf(content.content));
+            this.state.selected.splice(this.state.selected.indexOf(content.content), 1);
+            //this.setState({ unsolvedPieces : this.state.unsolvedPieces, selected : this.state.selected });
         }
       }.bind(this));
+      console.log(this.state.unsolvedPieces.length);
   }
 
   , checkForSolution: function() {
@@ -95,7 +101,7 @@ var GameView = React.createClass({
      this.state.selected.push(content.content);
      this.state.unSelected.splice(this.state.unSelected.indexOf(content), 1);
      this.state.currentString+=content.content;
-     this.setState({ selected: this.state.selected, currentString: this.state.currentString});
+     this.setState({ selected: this.state.selected, currentString: this.state.currentString, unSelected: this.state.unSelected });
      this.checkForSolution();
   }
 

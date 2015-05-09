@@ -25,6 +25,7 @@ var Block = React.createClass({
      this.props.solved.forEach(function(value, index){
         if(value.indexOf(this.props.piece.content)!=-1){
             if(this.state.selected) {
+                console.log("remove piece");
               solved = true;
               this.props.removePiece(this.props.piece);
             }
@@ -35,6 +36,7 @@ var Block = React.createClass({
   }
 
   , _handleSelect: function() {
+     console.log("clicked");
      this.setState({ selected : true});
      this.props.handleItemSelect(this.props.piece)
   }
@@ -46,6 +48,7 @@ var Block = React.createClass({
         left: this.state.onboard ? l : (1000 + (this.state.order * 70)) + 'px',
         top: this.state.selected ? (this.props.row * 10) + 'px' : ((this.props.row * 10) + 500) + 'px'
       };
+      console.log(this.state.selected, this.props.unSelectedItems.indexOf(this.props.piece), divStyle, this.props.piece.content);
 
       var solved = this._isSolved();
 
