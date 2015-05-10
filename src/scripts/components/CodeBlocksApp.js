@@ -15,12 +15,14 @@ var CodeBlocksApp = React.createClass({
   getInitialState: function() {
     return {
       solvedPieces : [],
-      started: false
+      started: false,
+      score: 0
     }
   },
 
-  onSolvedPiece: function(solution) {
+  onSolvedPiece: function(solution, score) {
     this.refs.preview.solvePiece(solution);
+    this.setState({ score: this.state.score + score });
   },
 
   startGame: function() {
@@ -37,6 +39,7 @@ var CodeBlocksApp = React.createClass({
         { !this.state.started ?
             <div className="start-btn" onClick={this.startGame}>Start</div>
         : undefined }
+        <div className="score-board" ref="scoreBoard">{"score: " + this.state.score}</div>
       </div>
     );
   },

@@ -84,7 +84,7 @@ var GameView = React.createClass({
         if(this.state.currentString===value.passKey){
             setTimeout(function(){
                 this.state.solved.push(value);
-                this.props.onSolved(value);
+                this.props.onSolved(value, 30);
                 this.setState({
                     currentString: "",
                     solved: this.state.solved
