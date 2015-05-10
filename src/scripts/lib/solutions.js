@@ -1,9 +1,17 @@
 define(function (require, exports, module) {
   module.exports = {
 
-    rawSolution: "<p>I am some text</p><h1>my name is chris</h1>",
+    rawSolution: "<p>lorum ipsum</p><h1>lorum ipsum</h1>",
 
-    solutions: ["<p>I am some text</p>","<h1>my name is chris</h1>"],
+    solutions: [{
+        passKey: "tag0content1tag2",
+        content: "<p>lorum ipsum</p>"
+    },
+
+    {
+        passKey: "tag3content4tag5",
+        content: "<h1>lorum ipsum</h1>"
+    }],
 
     pieces: [
 
@@ -14,7 +22,7 @@ define(function (require, exports, module) {
 
     {
 
-        content: "I am some text",
+        content: "lorum ipsum",
         id: "content1"
     },
 
@@ -29,8 +37,8 @@ define(function (require, exports, module) {
     },
 
     {
-        content: "my name is chris",
-        id: "tag4"
+        content: "lorum ipsum",
+        id: "content4"
     },
 
     {

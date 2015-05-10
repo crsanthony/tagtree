@@ -5,11 +5,33 @@ var React = require('react/addons');
 require('styles/PuzzlePiece.sass');
 
 var PuzzlePiece = React.createClass({
+
+  getInitialState: function() {
+    return {
+        solved: false
+    }
+  },
+
+  componentDidUpdate: function() {
+    if(!this.state.solved) {
+      if(this.props.solvedPiece.content===this.props.content){
+        this.setState({
+            solved: true
+        })
+      }
+    }
+  },
+
   render: function () {
-    var content = "";
+    var content = this.props.content;
+
+    var cx = React.addons.classSet;
+    var pieceClasses = cx({
+        'puzzle-piece' : true,
+        'puzzle-piece--shown' : this.state.solved
+    })
     return (
-        <div className="puzzle-piece">
-          {content}
+        <div className={pieceClasses} dangerouslySetInnerHTML={{__html: content}} >
         </div>
       );
   }

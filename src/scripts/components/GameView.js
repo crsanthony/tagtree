@@ -5,6 +5,7 @@ var Block = require('components/Block')
 var Solutions = require('../lib/solutions')
 var _ = require('underscore')
 
+
 require('styles/GameView.sass');
 
 var GameView = React.createClass({
@@ -36,6 +37,7 @@ var GameView = React.createClass({
   }
 
   , getBlocks: function() {
+
       var blocks = [];
       this.state.unsolvedPieces.forEach(function(value, index){
         blocks.push(this.getBlock(value, index));
@@ -44,11 +46,24 @@ var GameView = React.createClass({
   }
 
   , isValidOrder: function(content) {
-      if(content.indexOf("/")!= -1){
-        var contentIndex = Solutions.pieces.indexOf(content.content);
-        var openingTag = Solutions.pieces[contentIndex-2];
+      if(content.content.indexOf("/")!= -1){
+        var contentIndex = Solutions.pieces.indexOf(content);
+        var openingTag = Solutions.pieces[contentIndex-2].content;
             if(this.state.selected.indexOf(openingTag)===-1){
-                console.log("invalid order.  todo: do something about it");
+                setTimeout(function(){
+                    setTimeout(function() {
+                        //this.removePiece(content);
+                    }.bind(this), 1000)
+                    //this.state.invalidTag = content.content;
+                    //content.id = content.id + content.id;
+                    //this.state.unSelected.push(content);
+                    //this.state.unsolvedPieces.push(content);
+
+                    this.setState({
+                        //invalidTag: this.state.invalidTag
+                        //unsolvedPieces: this.state.unsolvedPieces
+                    });
+                }.bind(this), 1000)
             }
       } else {
         console.log("this is either an opening tag or content");
@@ -59,56 +74,42 @@ var GameView = React.createClass({
       this.state.unsolvedPieces.forEach(function(value, index){
         if(value.id=== content.id ){
             this.state.unsolvedPieces.splice(index, 1);
-            console.log(this.state.selected);
-            console.log(content, this.state.selected.indexOf(content.content));
             this.state.selected.splice(this.state.selected.indexOf(content.content), 1);
-            //this.setState({ unsolvedPieces : this.state.unsolvedPieces, selected : this.state.selected });
         }
       }.bind(this));
-      console.log(this.state.unsolvedPieces.length);
   }
 
-  , checkForSolution: function() {
+  , checkForSolution: function(content) {
         Solutions.solutions.forEach(function(value, index){
-        if(this.state.currentString===value){
+        if(this.state.currentString===value.passKey){
             setTimeout(function(){
-                this.state.solved.push(this.state.currentString);
-                this.removeSolvedPieces();
+                this.state.solved.push(value);
+                this.props.onSolved(value);
                 this.setState({
                     currentString: "",
                     solved: this.state.solved
                 });
             }.bind(this), 1000);
         } else {
-            console.log("nope!");
+            //no solution. needed?
         }
      }.bind(this))
 
   }
 
-  , removeSolvedPieces: function() {
-      this.state.solved.forEach(function(value, index) {
-        this.state.unsolvedPieces.forEach(function(content, num) {
-            if(value === content) {
-
-            }
-        });
-      }.bind(this));
-  }
-
   , handleItemSelect: function(content) {
-     this.isValidOrder(content.content);
+     this.isValidOrder(content);
      this.state.selected.push(content.content);
      this.state.unSelected.splice(this.state.unSelected.indexOf(content), 1);
-     this.state.currentString+=content.content;
+     this.state.currentString+=content.id;
      this.setState({ selected: this.state.selected, currentString: this.state.currentString, unSelected: this.state.unSelected });
-     this.checkForSolution();
+     this.checkForSolution(content);
   }
 
   , render: function () {
     return (
         <div className="GameView">
-          { this.getBlocks() }
+          { this.props.started ? this.getBlocks() : "" }
         </div>
       );
   }
