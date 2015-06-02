@@ -110,6 +110,8 @@ var GameView = React.createClass({
     return (
         <div className="GameView">
           { this.props.started ? this.getBlocks() : "" }
+          <div className="game-view--bottom">
+          </div>
         </div>
       );
   }

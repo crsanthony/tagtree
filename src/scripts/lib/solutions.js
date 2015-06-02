@@ -5,13 +5,15 @@ define(function (require, exports, module) {
 
     solutions: [{
         passKey: "tag0content1tag2",
-        content: "<p>lorum ipsum</p>"
+        content: "<p>IF TOUCAN</p>"
     },
 
     {
         passKey: "tag3content4tag5",
-        content: "<h1>lorum ipsum</h1>"
-    }],
+        content: "<h1>you can</h1>"
+    }
+
+    ],
 
     pieces: [
 

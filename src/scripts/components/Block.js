@@ -64,7 +64,6 @@ var Block = React.createClass({
       var points = isInvalid ? "-10" : "+10";
       return (
         <div>
-
            <div className={blockStyle} style={divStyle} onClick={this._handleSelect}>
             <span className={pointsStyle}>{points}</span>
             <span className="block__content">{this.props.piece.content}</span>

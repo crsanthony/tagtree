@@ -3,6 +3,7 @@
 var React = require('react/addons');
 var GameView = require('components/GameView');
 var Preview = require('components/Preview');
+var ScoreBoard = require('components/ScoreBoard');
 
 
 // CSS
@@ -22,7 +23,7 @@ var CodeBlocksApp = React.createClass({
 
   onSolvedPiece: function(solution, score) {
     this.refs.preview.solvePiece(solution);
-    this.setState({ score: this.state.score + score });
+    this.refs.scoreboard.tallyScore(score);
   },
 
   startGame: function() {
@@ -34,12 +35,15 @@ var CodeBlocksApp = React.createClass({
   render: function() {
     return (
       <div className="Main">
+        <div className="left-pane">
+        <img className="background-sceenery" src="images/safari.png" />
+        </div>
         <GameView onSolved={this.onSolvedPiece} started={this.state.started} />
         <Preview ref="preview" />
         { !this.state.started ?
             <div className="start-btn" onClick={this.startGame}>Start</div>
         : undefined }
-        <div className="score-board" ref="scoreBoard">{"score: " + this.state.score}</div>
+        <ScoreBoard ref="scoreboard" />
       </div>
     );
   },
