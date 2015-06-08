@@ -4,6 +4,7 @@ var React = require('react/addons');
 var GameView = require('components/GameView');
 var Preview = require('components/Preview');
 var ScoreBoard = require('components/ScoreBoard');
+var GumballMachine = require('components/GumballMachine')
 
 
 // CSS
@@ -36,7 +37,7 @@ var CodeBlocksApp = React.createClass({
     return (
       <div className="Main">
         <div className="left-pane">
-        <img className="background-sceenery" src="images/safari.png" />
+        <GumballMachine />
         </div>
         <GameView onSolved={this.onSolvedPiece} started={this.state.started} />
         <Preview ref="preview" />
