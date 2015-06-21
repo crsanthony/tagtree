@@ -40,11 +40,21 @@ var Block = React.createClass({
   }
 
   , render: function () {
-      var l = this.state.selected ? (this.props.selectedItems.indexOf(this.props.piece.content) * 70) + 'px' :
-      (this.props.unSelectedItems.indexOf(this.props.piece)*70) + 'px';
+      var l = this.state.selected ? (this.props.selectedItems.indexOf(this.props.piece.content) * 74) + 'px' :
+      60 + (this.props.unSelectedItems.indexOf(this.props.piece)*74) + 'px';
+
+      var t;
+      if(!this.state.onboard) {
+        t = 800 + (this.state.order * 30) + 'px';
+      } else if(this.state.selected) {
+        t = (this.props.row * 10) + 'px';
+      } else {
+        t = ((this.props.row * 10) + 500) + 'px';
+      }
+
       var divStyle = {
-        left: this.state.onboard ? l : (1000 + (this.state.order * 170)) + 'px',
-        top: this.state.selected ? (this.props.row * 10) + 'px' : ((this.props.row * 10) + 500) + 'px'
+        left: this.state.onboard ? l : 60 + (this.state.order * 74) + 'px',
+        top: t
       };
 
       var solved = this._isSolved();

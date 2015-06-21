@@ -10,8 +10,12 @@
   position: absolute;
   height: 330px;
   width: 100%;
-  background-color: #354551;
-  bottom: 0px;
-  z-index: -1;
+  background-color: rgba(53, 69, 81, .9);
+  bottom: -400px;
+  z-index: 1;
+  transition: bottom 1s ease-out;
+
+  &.game-view--bottom--up
+    bottom: 0px;
 
 

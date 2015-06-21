@@ -3,6 +3,7 @@
 var React = require('react/addons');
 var Block = require('components/Block')
 var Solutions = require('../lib/solutions')
+var GumballMachine = require('components/GumballMachine')
 var _ = require('underscore')
 
 
@@ -19,6 +20,12 @@ var GameView = React.createClass({
       currentString: "",
       solved: []
     }
+  }
+
+  , componentDidMount: function() {
+     setTimeout(function() {
+        this.setState({ waterUp: true })
+     }.bind(this), 1000)
   }
 
   , getBlock: function(value, index) {
@@ -107,11 +114,19 @@ var GameView = React.createClass({
   }
 
   , render: function () {
+    var cx = React.addons.classSet;
+    var waterClasses = cx({
+        "game-view--bottom": true,
+        "game-view--bottom--up": this.state.waterUp
+    })
     return (
         <div className="GameView">
+        <GumballMachine />
           { this.props.started ? this.getBlocks() : "" }
-          <div className="game-view--bottom">
+          <div className={waterClasses}>
+
           </div>
+
         </div>
       );
   }

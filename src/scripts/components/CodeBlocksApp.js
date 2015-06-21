@@ -37,7 +37,7 @@ var CodeBlocksApp = React.createClass({
     return (
       <div className="Main">
         <div className="left-pane">
-        <GumballMachine />
+        <img className="left-poster" src="images/safari.png" />
         </div>
         <GameView onSolved={this.onSolvedPiece} started={this.state.started} />
         <Preview ref="preview" />
