@@ -3,6 +3,7 @@
 var React = require('react/addons');
 var Block = require('components/Block')
 var Solutions = require('../lib/solutions')
+var Sounds = require('../lib/sounds')
 var GumballMachine = require('components/GumballMachine')
 var _ = require('underscore')
 
@@ -44,7 +45,6 @@ var GameView = React.createClass({
   }
 
   , getBlocks: function() {
-
       var blocks = [];
       this.state.unsolvedPieces.forEach(function(value, index){
         blocks.push(this.getBlock(value, index));
@@ -92,6 +92,7 @@ var GameView = React.createClass({
             setTimeout(function(){
                 this.state.solved.push(value);
                 this.props.onSolved(value, 30);
+                Sounds.playScoreSound();
                 this.setState({
                     currentString: "",
                     solved: this.state.solved
@@ -105,6 +106,7 @@ var GameView = React.createClass({
   }
 
   , handleItemSelect: function(content) {
+     Sounds.playSelectedSound();
      this.isValidOrder(content);
      this.state.selected.push(content.content);
      this.state.unSelected.splice(this.state.unSelected.indexOf(content), 1);
