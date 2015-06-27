@@ -52,6 +52,26 @@ var GameView = React.createClass({
       return blocks;
   }
 
+  , startGame: function() {
+    this.startRowTimer();
+    return this.getBlocks();
+  }
+
+  , startRowTimer: function() {
+    setTimeout(function(){
+        this.addRow()
+    }.bind(this), 10000)
+  }
+
+  , addRow: function() {
+     console.log("add a row");
+  }
+
+  , rowSolved: function() {
+     console.log("row solved");
+     this.addRow();
+  }
+
   , isValidOrder: function(content) {
       if(content.content.indexOf("/")!= -1){
         var contentIndex = Solutions.pieces.indexOf(content);
@@ -67,7 +87,7 @@ var GameView = React.createClass({
                     //this.state.unsolvedPieces.push(content);
 
                     this.setState({
-                        //invalidTag: this.state.invalidTag
+                        //invalidTag: this.state.invalidTag,
                         //unsolvedPieces: this.state.unsolvedPieces
                     });
                 }.bind(this), 1000)
@@ -124,7 +144,7 @@ var GameView = React.createClass({
     return (
         <div className="GameView">
         <GumballMachine />
-          { this.props.started ? this.getBlocks() : "" }
+          { this.props.started ? this.startGame() : "" }
           <div className={waterClasses}>
 
           </div>
