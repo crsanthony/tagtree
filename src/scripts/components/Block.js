@@ -40,7 +40,7 @@ var Block = React.createClass({
   }
 
   , render: function () {
-      var l = this.state.selected ? (this.props.selectedItems.indexOf(this.props.piece.content) * 74) + 'px' :
+      var l = this.state.selected ? (this.props.selectedItems.indexOf(this.props.piece.id) * 74) + 'px' :
       60 + (this.props.unSelectedItems.indexOf(this.props.piece)*74) + 'px';
 
       var t;

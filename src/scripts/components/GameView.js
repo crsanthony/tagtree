@@ -9,9 +9,6 @@ var _ = require('underscore')
 var shuffle = require("knuth-shuffle").knuthShuffle;
 
 
-var ROW_LENGTH = 6;
-
-
 require('styles/GameView.sass');
 
 var GameView = React.createClass({
@@ -28,7 +25,8 @@ var GameView = React.createClass({
       solvedPieces: [],
       solved: [],
       lastBlockIndex: 0,
-      rowCount: 1
+      rowCount: 1,
+      rowLength: 6
     }
   }
 
@@ -55,9 +53,8 @@ var GameView = React.createClass({
   , getBlocks: function() {
       var blocks = [];
       var lastBlockIndex = this.state.lastBlockIndex;
-      var blocksCount = this.state.lastBlockIndex + ROW_LENGTH;
-      var nextBlockIndex = this.state.unsolvedPieces.length; //blocksCount > this.state.unsolvedPieces.length ? this.state.unsolvedPieces.length : blocksCount;
-
+      var blocksCount = this.state.lastBlockIndex + this.state.rowLength;
+      var nextBlockIndex = blocksCount > this.state.unsolvedPieces.length ? this.state.unsolvedPieces.length : blocksCount;
 
       for(var i=lastBlockIndex; i<nextBlockIndex; i++){
         var block = this.state.unsolvedPieces[i];
@@ -68,11 +65,11 @@ var GameView = React.createClass({
   }
 
   , getRows: function() {
-    var rows = [];
-    //for rows length
-    //get row
+      var rows = [];
+      //for rows length
+      //get row
 
-    return rows
+      return rows
   }
 
   , getRow: function() {
@@ -99,36 +96,11 @@ var GameView = React.createClass({
      this.addRow();
   }
 
-  , isValidOrder: function(content) {
-      if(content.content.indexOf("/")!= -1){
-        var contentIndex = Solutions.pieces.indexOf(content);
-        var openingTag = Solutions.pieces[contentIndex-2].content;
-            if(this.state.selected.indexOf(openingTag)===-1){
-                setTimeout(function(){
-                    setTimeout(function() {
-                        //this.removePiece(content);
-                    }.bind(this), 1000)
-                    //this.state.invalidTag = content.content;
-                    //content.id = content.id + content.id;
-                    //this.state.unSelected.push(content);
-                    //this.state.unsolvedPieces.push(content);
-
-                    this.setState({
-                        //invalidTag: this.state.invalidTag,
-                        //unsolvedPieces: this.state.unsolvedPieces
-                    });
-                }.bind(this), 1000)
-            }
-      } else {
-        console.log("this is either an opening tag or content");
-      }
-  }
-
   , removePiece: function(content) {
       this.state.unsolvedPieces.forEach(function(value, index){
         if(value.id === content.id ){
             this.state.unsolvedPieces.splice(index, 1);
-            this.state.selected.splice(this.state.selected.indexOf(content.content), 1);
+            this.state.selected.splice(this.state.selected.indexOf(content.id), 1);
         }
       }.bind(this));
   }
@@ -158,8 +130,8 @@ var GameView = React.createClass({
 
   , handleItemSelect: function(content) {
      Sounds.playSelectedSound();
-     this.isValidOrder(content);
-     this.state.selected.push(content.content);
+
+     this.state.selected.push(content.id);
      this.state.unSelected.splice(this.state.unSelected.indexOf(content), 1);
 
      if(content.openingTag){
@@ -167,6 +139,7 @@ var GameView = React.createClass({
             strings : content.name,
             ids: content.id
         };
+
         this.state.currentOpenSolutions.push(current);
         this.state.currentOpenSolution = current
         this.setState({
@@ -182,31 +155,35 @@ var GameView = React.createClass({
         })
      }
 
+     this.state.rowLength++;
 
      this.setState({
         selected: this.state.selected,
         unSelected: this.state.unSelected,
+        rowLength: this.state.rowLength
      });
 
      this.checkForSolution(content);
   }
 
   , render: function () {
+      var cx = React.addons.classSet;
 
-    var cx = React.addons.classSet;
-    var waterClasses = cx({
+      var waterClasses = cx({
         "game-view--bottom": true,
         "game-view--bottom--up": this.state.waterUp
-    })
-    return (
+      });
+
+      return (
         <div className="GameView">
          <GumballMachine shouldShow={this.state.waterUp} />
-        <div className={waterClasses}>
+         <div className={waterClasses}>
               { this.props.started ? this.getBlocks() : "" }
-        </div>
+         </div>
         </div>
       );
-  }
+    }
+
 });
 
 module.exports = GameView;
