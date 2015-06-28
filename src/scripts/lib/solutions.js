@@ -1,24 +1,23 @@
 define(function (require, exports, module) {
   module.exports = {
-
     rawSolution: "<p>lorum ipsum</p><h1>lorum ipsum</h1>",
 
     solutions: [{
-        passKey: "pcontent1/p",
+        passKey: "pcontent/p",
         content: "<p>IF TOUCAN</p>"
     },
 
     {
-        passKey: "h1content4/h1",
-        content: "<h1>you can</h1>"
+        passKey: "h3content/h3",
+        content: "<h3>you can</h3>"
     },
 
     {
-        passKey: "h1content10/h1",
+        passKey: "h1content/h1",
         content: "<h1>Build a Website</h1>"
     },
     {
-        passKey: "imgcontent7/img",
+        passKey: "imgimagecontent/img",
         content: "<img src='images/safari.png' />"
     }
     ],
@@ -26,15 +25,15 @@ define(function (require, exports, module) {
     pieces: [
 
     {
+        openingTag: true,
         content: "<p>",
         name: "p",
         id: "p1"
     },
 
     {
-
         content: "lorum ipsum",
-        name: "content1",
+        name: "content",
         id: "c1"
     },
 
@@ -45,23 +44,26 @@ define(function (require, exports, module) {
     },
 
     {
-        content: "<h1>",
-        name: "h1",
+        openingTag: true,
+        content: "<h3>",
+        name: "h3",
         id: "h3"
     },
 
     {
         content: "lorum ipsum",
-        name: "content4",
+        name: "content",
         id: "c4"
     },
 
     {
-        content: "</h1>",
-        name: "/h1",
+        content: "</h3>",
+        name: "/h3",
         id: "h5"
     },
+
     {
+        openingTag: true,
         content: "<h1>",
         name: "h1",
         id: "h6"
@@ -69,7 +71,7 @@ define(function (require, exports, module) {
 
     {
         content: "lorum ipsum",
-        name: "content10",
+        name: "content",
         id: "content8"
     },
 
@@ -80,6 +82,7 @@ define(function (require, exports, module) {
     },
 
     {
+        openingTag: true,
         content: "<img ",
         name: "img",
         id: "img10"
@@ -87,7 +90,7 @@ define(function (require, exports, module) {
 
     {
         content: "src='...'",
-        name: "content7",
+        name: "imagecontent",
         id: "content11"
     },
 

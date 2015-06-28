@@ -6,7 +6,8 @@ var Solutions = require('../lib/solutions')
 var Sounds = require('../lib/sounds')
 var GumballMachine = require('components/GumballMachine')
 var _ = require('underscore')
-var shuffle = require('knuth-shuffle').knuthShuffle
+var shuffle = require("knuth-shuffle").knuthShuffle;
+
 
 var ROW_LENGTH = 6;
 
@@ -16,13 +17,15 @@ require('styles/GameView.sass');
 var GameView = React.createClass({
 
   getInitialState: function() {
+    var shufffledPieces = shuffle(Solutions.pieces.slice(0));
+
     return {
       selected: [],
-      unSelected: _.clone(Solutions.pieces),
-      unsolvedPieces: _.clone(Solutions.pieces),
+      unSelected: _.clone(shufffledPieces),
+      unsolvedPieces: _.clone(shufffledPieces),
+      currentOpenSolutions : [],
+      currentOpenSolution : [],
       solvedPieces: [],
-      currentString: "",
-      currentIds: "",
       solved: [],
       lastBlockIndex: 0,
       rowCount: 1
@@ -32,7 +35,7 @@ var GameView = React.createClass({
   , componentDidMount: function() {
      setTimeout(function() {
         this.setState({ waterUp: true })
-     }.bind(this), 1000)
+     }.bind(this), 2000)
 
   }
 
@@ -53,7 +56,7 @@ var GameView = React.createClass({
       var blocks = [];
       var lastBlockIndex = this.state.lastBlockIndex;
       var blocksCount = this.state.lastBlockIndex + ROW_LENGTH;
-      var nextBlockIndex = blocksCount > this.state.unsolvedPieces.length ? this.state.unsolvedPieces.length : blocksCount;
+      var nextBlockIndex = this.state.unsolvedPieces.length; //blocksCount > this.state.unsolvedPieces.length ? this.state.unsolvedPieces.length : blocksCount;
 
 
       for(var i=lastBlockIndex; i<nextBlockIndex; i++){
@@ -132,16 +135,17 @@ var GameView = React.createClass({
 
   , checkForSolution: function(content) {
         Solutions.solutions.forEach(function(value, index){
-          if(this.state.currentString===value.passKey){
-            value.passKey += this.state.currentIds;
+          if(this.state.currentOpenSolution.strings === value.passKey){
+            value.passKey += this.state.currentOpenSolution.ids;
 
             setTimeout(function(){
                 this.state.solved.push(value);
                 this.props.onSolved(value, 30);
                 Sounds.playScoreSound();
+                this.state.currentOpenSolutions.pop();
                 this.setState({
-                    currentString: "",
-                    currentIds: "",
+                    currentOpenSolutions: this.state.currentOpenSolutions,
+                    currentOpenSolution: this.state.currentOpenSolutions[this.state.currentOpenSolutions.length-1],
                     solved: this.state.solved
                 });
             }.bind(this), 1000);
@@ -157,18 +161,38 @@ var GameView = React.createClass({
      this.isValidOrder(content);
      this.state.selected.push(content.content);
      this.state.unSelected.splice(this.state.unSelected.indexOf(content), 1);
-     this.state.currentString+=content.name;
-     this.state.currentIds+=content.id
+
+     if(content.openingTag){
+        var current = {
+            strings : content.name,
+            ids: content.id
+        };
+        this.state.currentOpenSolutions.push(current);
+        this.state.currentOpenSolution = current
+        this.setState({
+            currentOpenSolutions : this.state.currentOpenSolutions
+        })
+
+     } else {
+        this.state.currentOpenSolution.strings += content.name;
+        this.state.currentOpenSolution.ids += content.id;
+
+        this.setState({
+            currentOpenSolution: this.state.currentOpenSolution
+        })
+     }
+
+
      this.setState({
         selected: this.state.selected,
-        currentString: this.state.currentString,
         unSelected: this.state.unSelected,
-        currentIds: this.state.currentIds
      });
+
      this.checkForSolution(content);
   }
 
   , render: function () {
+
     var cx = React.addons.classSet;
     var waterClasses = cx({
         "game-view--bottom": true,
@@ -176,12 +200,10 @@ var GameView = React.createClass({
     })
     return (
         <div className="GameView">
-         <GumballMachine />
+         <GumballMachine shouldShow={this.state.waterUp} />
         <div className={waterClasses}>
               { this.props.started ? this.getBlocks() : "" }
-            </div>
-
-
+        </div>
         </div>
       );
   }

@@ -37,9 +37,17 @@ var GumballMachine = React.createClass({
     Engine.run(engine);
   },
 
+
   render: function () {
+    var cx = React.addons.classSet;
+
+    var gumballClasses = cx({
+      'GumballMachine' : true,
+      'GumballMachine--hidden' : this.props.shouldShow
+    });
+
     return (
-        <div className="GumballMachine">
+        <div className={gumballClasses} >
             <div id="Gumballs">
             </div>
         </div>
