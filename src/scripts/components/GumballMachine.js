@@ -14,7 +14,7 @@ var GumballMachine = React.createClass({
     Bodies = Matter.Bodies;
 
 // create a Matter.js engine
-    var engine = Engine.create(document.getElementById('Gumball'), {
+    var engine = Engine.create(document.getElementById('Gumballs'), {
         render: {
             options: {
                 height: 1000,
@@ -39,8 +39,9 @@ var GumballMachine = React.createClass({
 
   render: function () {
     return (
-        <div id="Gumball">
-
+        <div className="GumballMachine">
+            <div id="Gumballs">
+            </div>
         </div>
       );
   }

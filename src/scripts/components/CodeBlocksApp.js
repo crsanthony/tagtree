@@ -30,7 +30,9 @@ var CodeBlocksApp = React.createClass({
   startGame: function() {
     this.setState({
         started : true
-    })
+    });
+
+    this.refs.game.startGame();
   },
 
   render: function() {
@@ -39,7 +41,7 @@ var CodeBlocksApp = React.createClass({
         <div className="left-pane">
         <img className="left-poster" src="images/safari.png" />
         </div>
-        <GameView onSolved={this.onSolvedPiece} started={this.state.started} />
+        <GameView ref="game" onSolved={this.onSolvedPiece} started={this.state.started} />
         <Preview ref="preview" />
         { !this.state.started ?
             <div className="start-btn" onClick={this.startGame}>Start</div>

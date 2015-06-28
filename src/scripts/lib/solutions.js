@@ -4,21 +4,21 @@ define(function (require, exports, module) {
     rawSolution: "<p>lorum ipsum</p><h1>lorum ipsum</h1>",
 
     solutions: [{
-        passKey: "tag0content1tag2",
+        passKey: "pcontent1/p",
         content: "<p>IF TOUCAN</p>"
     },
 
     {
-        passKey: "tag3content4tag5",
+        passKey: "h1content4/h1",
         content: "<h1>you can</h1>"
     },
 
     {
-        passKey: "tag9content10tag11",
+        passKey: "h1content10/h1",
         content: "<h1>Build a Website</h1>"
     },
     {
-        passKey: "tag6content7tag8",
+        passKey: "imgcontent7/img",
         content: "<img src='images/safari.png' />"
     }
     ],
@@ -27,65 +27,75 @@ define(function (require, exports, module) {
 
     {
         content: "<p>",
-        id: "tag0"
+        name: "p",
+        id: "p1"
     },
 
     {
 
         content: "lorum ipsum",
-        id: "content1"
+        name: "content1",
+        id: "c1"
     },
 
     {
         content: "</p>",
-        id: "tag2"
+        name: "/p",
+        id: "p2"
     },
 
     {
         content: "<h1>",
-        id: "tag3"
+        name: "h1",
+        id: "h3"
     },
 
     {
         content: "lorum ipsum",
-        id: "content4"
+        name: "content4",
+        id: "c4"
     },
 
     {
         content: "</h1>",
-        id: "tag5"
+        name: "/h1",
+        id: "h5"
     },
     {
         content: "<h1>",
-        id: "tag9"
+        name: "h1",
+        id: "h6"
     },
 
     {
         content: "lorum ipsum",
-        id: "content10"
+        name: "content10",
+        id: "content8"
     },
 
     {
         content: "</h1>",
-        id: "tag11"
+        name: "/h1",
+        id: "h9"
     },
 
     {
         content: "<img ",
-        id: "tag6"
+        name: "img",
+        id: "img10"
     },
 
     {
         content: "src='...'",
-        id: "content7"
+        name: "content7",
+        id: "content11"
     },
 
     {
         content: " />",
-        id: "tag8"
+        name: "/img",
+        id: "img12"
     }
-
-
 
     ]
 
