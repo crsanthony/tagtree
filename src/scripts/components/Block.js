@@ -73,6 +73,8 @@ var Block = React.createClass({
       var blockStyle = cx({
         'block': true,
         'block--dissolved': (solved || isInvalid) && this.state.selected,
+        'block--opening': this.props.piece.order === "open",
+        'block--closing': this.props.piece.order === "closing",
         'block--game-over': this.props.gameOver
       });
 
