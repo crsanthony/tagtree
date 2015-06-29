@@ -11,5 +11,15 @@ define(function (require, exports, module) {
       snd.play();
     }
 
+    , playBadBlockSound: function() {
+        var snd = new Audio("sounds/badblock_3.wav"); // buffers automatically when created
+        snd.play();
+    }
+
+    , playBlockOnBoard: function() {
+        var snd = new Audio("sounds/new_block_onboard.wav");
+        snd.play();
+    }
+
   };
 });

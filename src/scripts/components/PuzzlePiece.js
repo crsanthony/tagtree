@@ -14,11 +14,17 @@ var PuzzlePiece = React.createClass({
 
   componentDidUpdate: function() {
     if(!this.state.solved) {
-      if(this.props.solvedPiece.content===this.props.content){
-        this.setState({
+     if(this.props.solvedPiece){
+        if(this.props.solvedPiece.content===this.props.content){
+          this.setState({
             solved: true
-        })
-      }
+         })
+        }
+     }
+    }
+
+    if(this.props.shouldReset && this.state.solved){
+        this.setState({ solved: false})
     }
   },
 

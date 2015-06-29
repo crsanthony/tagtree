@@ -17,14 +17,15 @@ var GumballMachine = React.createClass({
     var engine = Engine.create(document.getElementById('Gumballs'), {
         render: {
             options: {
-                height: 1000,
+                height: 470,
             }
         }
     });
     engine.world
     engine.world.bounds.max.y = 1000;
     var pieces = [];
-// create two boxes and a ground
+    var howMany = 3;
+
     Solutions.pieces.forEach(function(value, index){
         var piece = Bodies.rectangle(Math.random()*600, 0, 50, 25);
         pieces.push(piece)
@@ -41,13 +42,8 @@ var GumballMachine = React.createClass({
   render: function () {
     var cx = React.addons.classSet;
 
-    var gumballClasses = cx({
-      'GumballMachine' : true,
-      'GumballMachine--hidden' : this.props.shouldShow
-    });
-
     return (
-        <div className={gumballClasses} >
+        <div className="GumballMachine" >
             <div id="Gumballs">
             </div>
         </div>

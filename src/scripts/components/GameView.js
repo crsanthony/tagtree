@@ -8,7 +8,6 @@ var GumballMachine = require('components/GumballMachine')
 var _ = require('underscore')
 var shuffle = require("knuth-shuffle").knuthShuffle;
 
-
 require('styles/GameView.sass');
 
 var GameView = React.createClass({
@@ -21,20 +20,20 @@ var GameView = React.createClass({
       unSelected: _.clone(shufffledPieces),
       unsolvedPieces: _.clone(shufffledPieces),
       currentOpenSolutions : [],
-      currentOpenSolution : [],
+      currentOpenSolution : { strings: "", ids: ""},
       solvedPieces: [],
       solved: [],
       lastBlockIndex: 0,
       rowCount: 1,
-      rowLength: 6
+      rowLength: 6,
+      waterUp: false,
+      gameOver: false,
+      invalidTag: undefined
     }
   }
 
   , componentDidMount: function() {
-     setTimeout(function() {
-        this.setState({ waterUp: true })
-     }.bind(this), 2000)
-
+      this.raiseWater();
   }
 
   , getBlock: function(value, index) {
@@ -47,6 +46,7 @@ var GameView = React.createClass({
                 selectedItems={this.state.selected}
                 unSelectedItems={this.state.unSelected}
                 invalidTag={this.state.invalidTag}
+                shouldReset={this.state.invalidTag}
                 solved={this.state.solved} /> );
   }
 
@@ -79,15 +79,23 @@ var GameView = React.createClass({
   }
 
   , startGame: function() {
-     this.startRowTimer();
+     //this.startRowTimer();
   }
 
+  , raiseWater: function() {
+     setTimeout(function(){
+        this.setState({ waterUp : true })
+      }.bind(this), 200)
+  }
+
+  //not currently used
   , startRowTimer: function() {
       setInterval(function(){
         this.addRow()
       }.bind(this), 10000)
   }
 
+  //not currently used
   , addRow: function() {
       this.state.rowCount = this.state.rowCount + 1
   }
@@ -111,13 +119,22 @@ var GameView = React.createClass({
             value.passKey += this.state.currentOpenSolution.ids;
 
             setTimeout(function(){
+
                 this.state.solved.push(value);
                 this.props.onSolved(value, 30);
                 Sounds.playScoreSound();
                 this.state.currentOpenSolutions.pop();
+
+                if(this.state.currentOpenSolutions.length===0){
+                    this.state.currentOpenSolution = { strings: "", ids: ""}
+                } else {
+                    this.state.currentOpenSolution = this.state.currentOpenSolutions[this.state.currentOpenSolutions.length-1]
+
+                }
+
                 this.setState({
                     currentOpenSolutions: this.state.currentOpenSolutions,
-                    currentOpenSolution: this.state.currentOpenSolutions[this.state.currentOpenSolutions.length-1],
+                    currentOpenSolution: this.state.currentOpenSolution,
                     solved: this.state.solved
                 });
             }.bind(this), 1000);
@@ -128,6 +145,43 @@ var GameView = React.createClass({
 
   }
 
+  , isValidOrder(piece) {
+      var current = this.state.currentOpenSolution;
+      if(!current.hasOpening) {
+        return false
+
+      }
+
+      if(piece.order === "closing"){
+        current.order.indexOf("content")
+        if(current.order.indexOf("content") == -1){
+            return false
+        }
+      }
+
+      if(piece.order != "open") {
+        var tagCount = this.countTags(current.tags, piece.tag)
+        if(piece.order === "closing"){
+
+            if(tagCount < 2){
+                return false
+            }
+        } else {
+            if(tagCount === 2){
+                return false
+            }
+        }
+      }
+
+      return true
+  }
+
+  , countTags : function(tags, tag) {
+      var substrings = tags.split(tag);
+      return substrings.length - 1;
+  }
+
+
   , handleItemSelect: function(content) {
      Sounds.playSelectedSound();
 
@@ -137,11 +191,15 @@ var GameView = React.createClass({
      if(content.openingTag){
         var current = {
             strings : content.name,
-            ids: content.id
+            ids: content.id,
+            hasOpening: true,
+            order: content.order,
+            tags: content.tag
         };
 
         this.state.currentOpenSolutions.push(current);
-        this.state.currentOpenSolution = current
+        this.state.currentOpenSolution = current;
+
         this.setState({
             currentOpenSolutions : this.state.currentOpenSolutions
         })
@@ -149,6 +207,8 @@ var GameView = React.createClass({
      } else {
         this.state.currentOpenSolution.strings += content.name;
         this.state.currentOpenSolution.ids += content.id;
+        this.state.currentOpenSolution.order += content.order,
+        this.state.currentOpenSolution.tags += content.tag
 
         this.setState({
             currentOpenSolution: this.state.currentOpenSolution
@@ -163,7 +223,23 @@ var GameView = React.createClass({
         rowLength: this.state.rowLength
      });
 
+     setTimeout(function() {
+        if(!this.isValidOrder(content)){
+          this.state.invalidTag = content.id;
+          this.setState({ invalidTag : this.state.invalidTag })
+          Sounds.playBadBlockSound()
+        }
+        return
+     }.bind(this), 1000)
+
      this.checkForSolution(content);
+  }
+
+
+  , resetGame: function() {
+      this.replaceState(this.getInitialState());
+      this.raiseWater();
+      this.props.resetGame();
   }
 
   , render: function () {
@@ -174,9 +250,20 @@ var GameView = React.createClass({
         "game-view--bottom--up": this.state.waterUp
       });
 
+      var congratsClasses = cx({
+        "game-btn": true,
+        "game-btn--shown": this.state.solved.length === Solutions.solutions.length
+      })
+
+      var badBlockClasses = cx({
+        "game-btn": true,
+        "game-btn--shown": this.state.invalidTag
+      })
+
       return (
         <div className="GameView">
-         <GumballMachine shouldShow={this.state.waterUp} />
+        <div className={congratsClasses} onClick={this.resetGame}><h3>Congratulations!</h3></div>
+        <div className={badBlockClasses} onClick={this.resetGame}><h3>Bad Merge! Try Again?</h3></div>
          <div className={waterClasses}>
               { this.props.started ? this.getBlocks() : "" }
          </div>

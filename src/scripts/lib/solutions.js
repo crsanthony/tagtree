@@ -18,13 +18,15 @@ define(function (require, exports, module) {
     },
     {
         passKey: "imgimagecontent/img",
-        content: "<img src='images/safari.png' />"
+        content: "<img src='images/Tom_Toucan-01.png' />"
     }
     ],
 
     pieces: [
 
     {
+        order: "open",
+        tag: "paragraph",
         openingTag: true,
         content: "<p>",
         name: "p",
@@ -32,18 +34,24 @@ define(function (require, exports, module) {
     },
 
     {
+        order: "content",
+        tag: "content",
         content: "lorum ipsum",
         name: "content",
         id: "c1"
     },
 
     {
+        order: "closing",
+        tag: "paragraph",
         content: "</p>",
         name: "/p",
         id: "p2"
     },
 
     {
+        order: "open",
+        tag: "header3",
         openingTag: true,
         content: "<h3>",
         name: "h3",
@@ -51,18 +59,24 @@ define(function (require, exports, module) {
     },
 
     {
+        order: "content",
+        tag: "content",
         content: "lorum ipsum",
         name: "content",
         id: "c4"
     },
 
     {
+        order: "closing",
+        tag: "header3",
         content: "</h3>",
         name: "/h3",
         id: "h5"
     },
 
     {
+        order: "open",
+        tag: "header1",
         openingTag: true,
         content: "<h1>",
         name: "h1",
@@ -70,18 +84,24 @@ define(function (require, exports, module) {
     },
 
     {
+        order: "content",
+        tag: "content",
         content: "lorum ipsum",
         name: "content",
         id: "content8"
     },
 
     {
+        order: "closing",
+        tag: "header1",
         content: "</h1>",
         name: "/h1",
         id: "h9"
     },
 
     {
+        order: "open",
+        tag: "img",
         openingTag: true,
         content: "<img ",
         name: "img",
@@ -89,12 +109,16 @@ define(function (require, exports, module) {
     },
 
     {
+        order: "content",
+        tag: "content",
         content: "src='...'",
         name: "imagecontent",
         id: "content11"
     },
 
     {
+        order: "closing",
+        tag: "img",
         content: " />",
         name: "/img",
         id: "img12"

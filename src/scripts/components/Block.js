@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react/addons');
+var Sounds = require('../lib/sounds')
 
 require('styles/Block.sass');
 
@@ -17,6 +18,7 @@ var Block = React.createClass({
   , componentDidMount: function() {
       setTimeout(function() {
         this.setState({ onboard : true })
+        Sounds.playBlockOnBoard();
       }.bind(this), 200)
   }
 
@@ -32,6 +34,12 @@ var Block = React.createClass({
        }.bind(this))
 
        return solved;
+  }
+
+  , componentDidUpdate: function() {
+     if(this.props.shouldReset && this.state.onboard){
+        this.replaceState(this.getInitialState())
+     }
   }
 
   , _handleSelect: function() {
@@ -60,18 +68,19 @@ var Block = React.createClass({
       var solved = this._isSolved();
 
       var cx = React.addons.classSet;
-      var isInvalid = this.props.invalidTag === this.props.piece.content;
+      var isInvalid = this.props.invalidTag === this.props.piece.id;
 
       var blockStyle = cx({
         'block': true,
-        'block--dissolved': (solved || isInvalid) && this.state.selected
+        'block--dissolved': (solved || isInvalid) && this.state.selected,
+        'block--game-over': this.props.gameOver
       });
 
       var pointsStyle = cx({
         'points' : true,
         'points--invalid': isInvalid  && this.state.selected
       })
-      var points = isInvalid ? "-10" : "+10";
+      var points = isInvalid ? "OH NO!" : "+10";
       return (
         <div>
            <div className={blockStyle} style={divStyle} onClick={this._handleSelect}>
