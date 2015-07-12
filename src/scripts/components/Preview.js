@@ -28,7 +28,7 @@ var Preview = React.createClass({
 
   renderPieces: function () {
     var pieces =[];
-    Solutions.solutions.forEach(function(value, index) {
+    Solutions.levels[this.props.level].solutions.forEach(function(value, index) {
         pieces.push(this.getPiece(value.content))
     }.bind(this))
     return pieces;

@@ -47,7 +47,7 @@ var CodeBlocksApp = React.createClass({
         <img className="left-poster" src="images/left-panel.png" />
         </div>
         <GameView ref="game" onSolved={this.onSolvedPiece} started={this.state.started} resetGame={this.resetGame} />
-        <Preview ref="preview" />
+        <Preview ref="preview" level="0"/>
         { !this.state.started ?
             <div className="start-btn" onClick={this.startGame}>
             <img src="images/level_1_a.png" />

@@ -13,7 +13,8 @@ require('styles/GameView.sass');
 var GameView = React.createClass({
 
   getInitialState: function() {
-    var shufffledPieces = shuffle(Solutions.pieces.slice(0));
+    var level = 0;
+    var shufffledPieces = shuffle(Solutions.levels[level].pieces.slice(0));
 
     return {
       selected: [],
@@ -24,6 +25,7 @@ var GameView = React.createClass({
       solvedPieces: [],
       solved: [],
       lastBlockIndex: 0,
+      level: level,
       rowCount: 1,
       rowLength: 6,
       waterUp: false,
@@ -114,7 +116,7 @@ var GameView = React.createClass({
   }
 
   , checkForSolution: function(content) {
-        Solutions.solutions.forEach(function(value, index){
+        Solutions.levels[this.state.level].solutions.forEach(function(value, index){
           if(this.state.currentOpenSolution.strings === value.passKey){
             value.passKey += this.state.currentOpenSolution.ids;
 
@@ -252,7 +254,7 @@ var GameView = React.createClass({
 
       var congratsClasses = cx({
         "game-btn": true,
-        "game-btn--shown": this.state.solved.length === Solutions.solutions.length
+        "game-btn--shown": this.state.solved.length === Solutions.levels[this.state.level].solutions.length
       })
 
       var badBlockClasses = cx({
