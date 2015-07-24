@@ -5,7 +5,7 @@ define(function (require, exports, module) {
     levels: [{
         solutions: [{
             passKey: "acontent/a",
-            content: "<a>next level</a>"
+            content: "<a>save Toucan!</a>"
         }],
         pieces: [
 
