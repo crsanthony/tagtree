@@ -265,6 +265,8 @@ var GameView = React.createClass({
         invalidTag: undefined,
         gameOver: false
       });
+
+      this.props.nextLevel(nextLevel);
   }
 
   , render: function () {
