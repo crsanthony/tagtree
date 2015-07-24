@@ -14,12 +14,12 @@ var GameView = React.createClass({
 
   getInitialState: function() {
     var level = 0;
-    var shufffledPieces = shuffle(Solutions.levels[level].pieces.slice(0));
+    var shuffledPieces = this.getPieces(level);
 
     return {
       selected: [],
-      unSelected: _.clone(shufffledPieces),
-      unsolvedPieces: _.clone(shufffledPieces),
+      unSelected: _.clone(shuffledPieces),
+      unsolvedPieces: _.clone(shuffledPieces),
       currentOpenSolutions : [],
       currentOpenSolution : { strings: "", ids: ""},
       solvedPieces: [],
@@ -78,6 +78,10 @@ var GameView = React.createClass({
     var row = <div className="row"> this.getBlocks() </div>;
 
      return row;
+  }
+
+  , getPieces(level) {
+     return shuffle(Solutions.levels[level].pieces.slice(0))
   }
 
   , startGame: function() {
@@ -237,11 +241,30 @@ var GameView = React.createClass({
      this.checkForSolution(content);
   }
 
+  , resetLevel() {
+     var level = this.state.level - 1;
+     this.state.level = level;
+     this.setState({ level: this.state.level });
+     this.nextLevel();
+  }
 
-  , resetGame: function() {
-      this.replaceState(this.getInitialState());
-      this.raiseWater();
-      this.props.resetGame();
+  , nextLevel: function() {
+      var nextLevel = this.state.level + 1;
+      var shuffledPieces = this.getPieces(nextLevel);
+
+      this.setState({
+        level : nextLevel,
+        selected: [],
+        unSelected: _.clone(shuffledPieces),
+        unsolvedPieces: _.clone(shuffledPieces),
+        currentOpenSolutions : [],
+        currentOpenSolution : { strings: "", ids: ""},
+        solvedPieces: [],
+        solved: [],
+        lastBlockIndex: 0,
+        invalidTag: undefined,
+        gameOver: false
+      });
   }
 
   , render: function () {
@@ -264,8 +287,13 @@ var GameView = React.createClass({
 
       return (
         <div className="GameView">
-        <div className={congratsClasses} onClick={this.resetGame}><h3>Congratulations!</h3></div>
-        <div className={badBlockClasses} onClick={this.resetGame}><h3>Bad Merge! Try Again?</h3></div>
+        <div className={congratsClasses} onClick={this.nextLevel}>
+            <h3>Congratulations!</h3>
+            <p>Start level {this.state.level + 2}</p>
+        </div>
+        <div className={badBlockClasses} onClick={this.resetLevel}>
+            <h3>Bad Merge! Try Again?</h3>
+        </div>
          <div className={waterClasses}>
               { this.props.started ? this.getBlocks() : "" }
          </div>
