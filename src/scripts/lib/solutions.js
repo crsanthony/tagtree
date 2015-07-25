@@ -1,6 +1,13 @@
 define(function (require, exports, module) {
   module.exports = {
-    rawSolution: "<p>lorum ipsum</p><h1>lorum ipsum</h1>",
+
+    generateIds: function(pieces) {
+        pieces.forEach(function(piece){
+            piece.id = Math.random() * 1000 + piece.id;
+        });
+
+        return pieces;
+    },
 
     levels: [{
         solutions: [{

@@ -39,6 +39,7 @@ var GameView = React.createClass({
   }
 
   , getBlock: function(value, index) {
+
       return ( <Block
                 piece={value}
                 key={value.id}
@@ -55,10 +56,11 @@ var GameView = React.createClass({
   , getBlocks: function() {
       var blocks = [];
       var lastBlockIndex = this.state.lastBlockIndex;
-      var blocksCount = this.state.lastBlockIndex + this.state.rowLength;
+      var blocksCount = lastBlockIndex + this.state.rowLength;
       var nextBlockIndex = blocksCount > this.state.unsolvedPieces.length ? this.state.unsolvedPieces.length : blocksCount;
 
       for(var i=lastBlockIndex; i<nextBlockIndex; i++){
+
         var block = this.state.unsolvedPieces[i];
         blocks.push(this.getBlock(block, i));
       }
@@ -81,7 +83,7 @@ var GameView = React.createClass({
   }
 
   , getPieces(level) {
-     return shuffle(Solutions.levels[level].pieces.slice(0))
+     return shuffle(Solutions.generateIds(Solutions.levels[level].pieces.slice(0)));
   }
 
   , startGame: function() {
@@ -253,17 +255,18 @@ var GameView = React.createClass({
       var shuffledPieces = this.getPieces(nextLevel);
 
       this.setState({
-        level : nextLevel,
+        level: nextLevel,
         selected: [],
         unSelected: _.clone(shuffledPieces),
         unsolvedPieces: _.clone(shuffledPieces),
-        currentOpenSolutions : [],
-        currentOpenSolution : { strings: "", ids: ""},
+        currentOpenSolutions: [],
+        currentOpenSolution: { strings: "", ids: ""},
         solvedPieces: [],
         solved: [],
         lastBlockIndex: 0,
         invalidTag: undefined,
-        gameOver: false
+        gameOver: false,
+        rowLength: 6,
       });
 
       this.props.nextLevel(nextLevel);
