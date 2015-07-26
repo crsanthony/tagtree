@@ -12,7 +12,8 @@ define(function (require, exports, module) {
     levels: [{
         solutions: [{
             passKey: "acontent/a",
-            content: "<a>save Toucan!</a>"
+            content: "<a>save Toucan!</a>",
+            id: "solution0a"
         }],
         pieces: [
 
@@ -45,21 +46,25 @@ define(function (require, exports, module) {
         {
          solutions: [{
                 passKey: "pcontent/p",
-                content: "<p>Need some help? Here's a clue: </p>"
+                content: "<p>Need some help? Here's a clue: </p>",
+                id: "solution1a"
             },
 
             {
                 passKey: "h3content/h3",
-                content: "<h3>If Toucan can,</h3>"
+                content: "<h3>If Toucan can,</h3>",
+                id: "solution1b"
             },
 
             {
                 passKey: "h1content/h1",
-                content: "<h1>you can too!</h1>"
+                content: "<h1>you can too!</h1>",
+                id: "solution1c"
             },
             {
                 passKey: "imgimagecontent/img",
-                content: "<img src='images/Tom_Toucan-01.png' />"
+                content: "<img src='images/Tom_Toucan-01.png' />",
+                id: "solution1d"
             }
             ],
         pieces: [

@@ -9,8 +9,11 @@ require('styles/Preview.sass');
 var Preview = React.createClass({
 
   getInitialState: function() {
+    var solutions = this.getPieces(0);
+
     return {
-      solvedPiece: undefined
+      solvedPiece: undefined,
+      solutions: solutions
     }
   },
 
@@ -18,12 +21,21 @@ var Preview = React.createClass({
     this.setState({ shouldReset:true})
   },
 
-  getPiece: function(content) {
-    return ( <PuzzlePiece content={content}
+  getPiece: function(value) {
+    return ( <PuzzlePiece content={value.content}
                 shouldReset={this.state.shouldReset}
-                key={content}
+                key={value.id}
                 solvedPiece={this.state.solvedPiece}/>
             );
+  },
+
+  getPieces: function(level) {
+    return Solutions.generateIds(Solutions.levels[level].solutions);
+  },
+
+  nextLevel: function(level) {
+    var solutions = this.getPieces(level);
+    this.setState({ solutions : solutions });
   },
 
   solvePiece: function(content) {
@@ -32,14 +44,14 @@ var Preview = React.createClass({
 
   renderPieces: function () {
     var pieces =[];
-    Solutions.levels[this.props.level].solutions.forEach(function(value, index) {
-        pieces.push(this.getPiece(value.content))
+    var solutions = this.state.solutions;
+    solutions.forEach(function(value, index) {
+        pieces.push(this.getPiece(value))
     }.bind(this))
     return pieces;
   },
 
   render: function () {
-    var content = "";
     return (
         <div className="Preview">
           { this.renderPieces() }

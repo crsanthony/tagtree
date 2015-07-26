@@ -39,6 +39,7 @@ var CodeBlocksApp = React.createClass({
 
   nextLevel: function(nextLevel) {
     this.setState({level: nextLevel });
+    this.refs.preview.nextLevel(nextLevel);
   },
 
   resetGame: function() {
