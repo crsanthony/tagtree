@@ -19,7 +19,11 @@ var Preview = React.createClass({
   },
 
   getPiece: function(content) {
-    return ( <PuzzlePiece content={content} shouldReset={this.state.shouldReset} key={content} solvedPiece={this.state.solvedPiece}  />)
+    return ( <PuzzlePiece content={content}
+                shouldReset={this.state.shouldReset}
+                key={content}
+                solvedPiece={this.state.solvedPiece}/>
+            );
   },
 
   solvePiece: function(content) {

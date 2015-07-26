@@ -45,17 +45,17 @@ define(function (require, exports, module) {
         {
          solutions: [{
                 passKey: "pcontent/p",
-                content: "<p>IF TOUCAN</p>"
+                content: "<p>Need some help? Here's a clue: </p>"
             },
 
             {
                 passKey: "h3content/h3",
-                content: "<h3>you can</h3>"
+                content: "<h3>If Toucan can,</h3>"
             },
 
             {
                 passKey: "h1content/h1",
-                content: "<h1>Build a Website</h1>"
+                content: "<h1>you can too!</h1>"
             },
             {
                 passKey: "imgimagecontent/img",
