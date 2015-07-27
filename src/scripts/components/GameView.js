@@ -250,9 +250,28 @@ var GameView = React.createClass({
      this.nextLevel();
   }
 
+  , getCongratsMessageContent() {
+     let level = this.state.level;
+     let content;
+     if(Solutions.levels.length === this.state.level + 1) {
+        content = ( <p>You Finished! Play again?</p> );
+     } else {
+        content = ( <p>Start level { this.state.level + 2} </p> );
+     }
+
+     return content;
+  }
+
   , nextLevel: function() {
-      var nextLevel = this.state.level + 1;
-      var shuffledPieces = this.getPieces(nextLevel);
+      let nextLevel;
+
+      if(Solutions.levels.length === this.state.level + 1) {
+        nextLevel = 0;
+      } else {
+        nextLevel = this.state.level + 1;
+      }
+
+      let shuffledPieces = this.getPieces(nextLevel);
 
       this.setState({
         level: nextLevel,
@@ -285,6 +304,8 @@ var GameView = React.createClass({
         "game-btn--shown": this.state.solved.length === Solutions.levels[this.state.level].solutions.length
       })
 
+      let congratsContent;
+
       var badBlockClasses = cx({
         "game-btn": true,
         "game-btn--shown": this.state.invalidTag
@@ -294,8 +315,9 @@ var GameView = React.createClass({
         <div className="GameView">
         <div className={congratsClasses} onClick={this.nextLevel}>
             <h3>Congratulations!</h3>
-            <p>Start level {this.state.level + 2}</p>
+            {this.getCongratsMessageContent()}
         </div>
+
         <div className={badBlockClasses} onClick={this.resetLevel}>
             <h3>Bad Merge! Try Again?</h3>
         </div>
