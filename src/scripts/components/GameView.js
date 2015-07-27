@@ -68,44 +68,14 @@ var GameView = React.createClass({
       return blocks;
   }
 
-  , getRows: function() {
-      var rows = [];
-      //for rows length
-      //get row
-
-      return rows
-  }
-
-  , getRow: function() {
-    var row = <div className="row"> this.getBlocks() </div>;
-
-     return row;
-  }
-
   , getPieces(level) {
      return shuffle(Solutions.generateIds(Solutions.levels[level].pieces.slice(0)));
-  }
-
-  , startGame: function() {
-     //this.startRowTimer();
   }
 
   , raiseWater: function() {
      setTimeout(function(){
         this.setState({ waterUp : true })
       }.bind(this), 200)
-  }
-
-  //not currently used
-  , startRowTimer: function() {
-      setInterval(function(){
-        this.addRow()
-      }.bind(this), 10000)
-  }
-
-  //not currently used
-  , addRow: function() {
-      this.state.rowCount = this.state.rowCount + 1
   }
 
   , rowSolved: function() {
@@ -124,11 +94,9 @@ var GameView = React.createClass({
   , checkForSolution: function(content) {
         Solutions.levels[this.state.level].solutions.forEach(function(value, index){
           if(this.state.currentOpenSolution.strings === value.passKey){
-            value.passKey += this.state.currentOpenSolution.ids;
 
             setTimeout(function(){
-
-                this.state.solved.push(value);
+                this.state.solved.push(this.state.currentOpenSolution.ids);
                 this.props.onSolved(value, 30);
                 Sounds.playScoreSound();
                 this.state.currentOpenSolutions.pop();

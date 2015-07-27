@@ -16,7 +16,6 @@ var CodeBlocksApp = React.createClass({
 
   getInitialState: function() {
     return {
-      solvedPieces : [],
       started: false,
       score: 0,
       level: 0
@@ -32,33 +31,30 @@ var CodeBlocksApp = React.createClass({
     this.setState({
         started : true,
     });
-
-    this.refs.game.startGame();
   },
 
   nextLevel: function(nextLevel) {
-    this.setState({level: nextLevel });
+    this.setState({ level: nextLevel });
     this.refs.preview.nextLevel(nextLevel);
-  },
-
-  resetGame: function() {
-    this.refs.preview.resetPreview();
   },
 
   render: function() {
     return (
       <div className="Main">
+
         <div className="left-pane">
             <img className="left-poster" src="images/left-panel.png" />
         </div>
-        <GameView ref="game"
+
+        <GameView
             onSolved={this.onSolvedPiece}
             started={this.state.started}
-            nextLevel={this.nextLevel}
-            resetGame={this.resetGame} />
+            nextLevel={this.nextLevel} />
+
         <Preview
             ref="preview"
             level={this.state.level} />
+
         { !this.state.started ?
             <div className="start-btn" onClick={this.startGame}>
             <img src="images/level_1_a.png" />
@@ -67,6 +63,7 @@ var CodeBlocksApp = React.createClass({
         }
 
         <ScoreBoard ref="scoreboard" />
+
       </div>
     );
   },

@@ -25,7 +25,7 @@ var Block = React.createClass({
   , _isSolved: function() {
        var solved = false
        this.props.solved.forEach(function(value, index){
-        if(value.passKey.indexOf(this.props.piece.id)!=-1){
+        if(value.indexOf(this.props.piece.id)!=-1){
             if(this.state.selected) {
               solved = true;
               this.props.removePiece(this.props.piece);
